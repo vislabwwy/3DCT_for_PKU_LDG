@@ -4,6 +4,11 @@ Author: Chentao Wen
 
 """
 
+"""
+3dct_for_pku_ldg includes some modifications to fit Luo-lab experiment
+Author: vislabwwy
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
@@ -11,6 +16,81 @@ import matplotlib as mpl
 
 mpl.rcParams["axes.spines.right"] = False
 mpl.rcParams["axes.spines.top"] = False
+
+def get_signals(path_raw, path_tracked, volume_num, layer_num):
+    """
+    Get transcription signals of all cells
+
+    Parameters
+    ----------
+    path_raw : str
+        The path of the images for extracting signals
+    path_tracked : str
+        The path of the tracked labels
+    volume_num : int
+        The number of the volumes
+    layer_num : int
+        the number of layers in the raw images and the tracked labels
+
+    Returns
+    -------
+    signals : numpy.ndarray
+        The extracted signals with shape (volume, label)
+    """
+    images_label, images_raw = _read_image(1, layer_num, path_raw, path_tracked)
+    cell_num = np.max(images_label)
+    signals = np.zeros((volume_num, cell_num))
+    max_loc = np.zeros((volume_num, cell_num,4))
+    for frame in range(1, volume_num + 1):
+
+        print("t=%i"%frame, end="\r")
+
+        # read raw images and labels
+        if frame>=2:
+            images_label, images_raw = _read_image(frame, layer_num, path_raw, path_tracked)
+
+        # calculate transcription signals of each cell
+        for label in range(1, cell_num + 1):
+            # make a mask of each label
+            label_i = np.copy(images_label)
+            label_i[np.where(label_i!=label)]=0
+
+            # extract raw intensities of the label
+            signals_i = images_raw*label_i/label
+            # calculate wanted singals (modify the fomula here if needed)
+            # find the position of the maximum vale (depth,height,width)
+            max_pos = np.where(signals_i==np.max(signals_i))
+            # center of multiple points
+            depth = int(np.floor(np.mean(max_pos[0])))
+            height = int(np.floor(np.mean(max_pos[1])))
+            width = int(np.floor(np.mean(max_pos[2])))
+            mean = (depth+height+width)/3
+
+            # signal area summation 1*5*5
+            detected_signals = np.sum(signals_i[depth,height-2:height+3,width-2:width+3])                  
+            # background summation 1*15*15
+            background_signals = np.sum(signals_i[depth,height-7:height+8,width-7:width+8])
+            # signal correction
+            signal_area = 25 # 1*5*5
+            background_area = 225 # 1*15*15
+            mean_bg = (background_signals - detected_signals)/(background_area - signal_area)
+            corrected_signals = detected_signals - (mean_bg * signal_area) 
+
+            # store value in signals array
+            signals[frame-1, label-1] = corrected_signals
+            max_loc[frame-1, label-1] = (depth,height,width,mean)
+
+            # save the label image for cell location
+            label_i[np.where(label_i==label)]=255
+            label_i[:,height,width]=0
+            max_projection_i = np.max(label_i,axis = 0)
+            cv2.imwrite(".\\cell_trace\\cell_%i_%i.png" %(label,frame),max_projection_i)
+    # save separate csv file for each cell
+    np.savetxt(".\\cell_trace\\signal.txt",signals,delimiter=',')
+    for label in range(1, cell_num + 1):
+        np.savetxt(".\\cell_trace\\cell_%i.txt"%label,signals[:,label-1],delimiter=',')
+        np.savetxt(".\\cell_trace\\max_loc_%i.txt"%label,max_loc[:,label-1],delimiter=',')
+    return signals
 
 def get_activities(path_raw, path_tracked, volume_num, layer_num):
     """

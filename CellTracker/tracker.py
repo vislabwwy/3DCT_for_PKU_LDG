@@ -1255,7 +1255,7 @@ class Tracker(Segmentation, Draw):
     def _ffn_prgls_once(self, i, r_coordinates_segment_pre):
         """Apply one iteration of FFN + PR-GLS"""
         init_match = initial_matching_quick(self.ffn_model, r_coordinates_segment_pre,
-                                            self.segresult.r_coordinates_segment, 20)
+                                            self.segresult.r_coordinates_segment, 5)
         pre_transformation_pre = r_coordinates_segment_pre.copy()
         P, r_coordinates_segment_post, C = pr_gls_quick(pre_transformation_pre,
                                                         self.segresult.r_coordinates_segment,

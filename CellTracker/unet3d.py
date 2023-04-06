@@ -33,7 +33,7 @@ def unet3_a():
         A 3D U-Net model (before training)
     """
     pool_size = up_size = (2, 2, 1)
-    inputs = Input((160, 160, 16, 1))
+    inputs = Input((80, 80, 8, 1))
     return _unet3_depth3(inputs, pool_size, up_size)
 
 
