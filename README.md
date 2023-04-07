@@ -2,7 +2,16 @@
 [![PyPI](https://img.shields.io/pypi/v/3DeeCellTracker)](https://pypi.org/project/3DeeCellTracker/) [![PyPI - Downloads](https://img.shields.io/pypi/dm/3DeeCellTracker)](https://pypi.org/project/3DeeCellTracker/) [![GitHub](https://img.shields.io/github/license/WenChentao/3DeeCellTracker)](https://github.com/WenChentao/3DeeCellTracker/blob/master/LICENSE)
 [![Youtube](https://img.shields.io/badge/YouTube-Demo-red)](https://www.youtube.com/watch?v=ctt6o3DY2bA&list=PLGY0oNQomrHERP08iEj-MsluFW8xQJujP)
 
+## 3DCT_for_PKU_LDG:
+
+**3DCT_for_PKU_LDG** is modified from **3DeeCellTracker** for Luo_lab fly transcriptional signal extraction.
+
+**Modifications include:**
+- CellTracker/unet3d.py line 36: change "inputs = Input((160,160,16,1))" to "inputs = Input((80,80,8,1))"
+- CellTracker/tracker.py line 1258: change "self.segresult.r_corrdinates_segment, 20" to "self.segresult.r_corrdinates_segment, 5" 
+
 **3DeeCellTracker** is a deep-learning based pipeline for tracking cells in 3D time lapse images of deforming/moving organs ([eLife, 2021](https://elifesciences.org/articles/59187)).
+
 
 ## Updates:
 

@@ -4,11 +4,6 @@ Author: Chentao Wen
 
 """
 
-"""
-3dct_for_pku_ldg includes some modifications to fit Luo-lab experiment
-Author: vislabwwy
-"""
-
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
