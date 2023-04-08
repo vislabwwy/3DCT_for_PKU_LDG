@@ -7,10 +7,12 @@
 **3DCT_for_PKU_LDG** is modified from **3DeeCellTracker** for Luo_lab fly transcriptional signal extraction.
 
 **Modifications include:**
-- CellTracker/unet3d.py line 36: change "inputs = Input((160,160,16,1))" to "inputs = Input((80,80,8,1))" **Luo-lab pic size is 460*157, smaller than 160**
-- CellTracker/tracker.py line 1258: change "self.segresult.r_corrdinates_segment, 20" to "self.segresult.r_corrdinates_segment, 5" **Luo-lab cell number per volume is less than 20**
+- CellTracker/unet3d.py line 36: change "inputs = Input((160,160,16,1))" to "inputs = Input((80,80,8,1))". **Luo-lab pic size is 460*157, smaller than 160**
+- CellTracker/tracker.py line 1258: change "self.segresult.r_corrdinates_segment, 20" to "self.segresult.r_corrdinates_segment, 5" **Luo-lab cell number per volume is less than 20. Note that the ffn model should also be updated accordingly**
 - CellTracker/analyses.py line 15-88: define a get_signals function. **Used for singal extraction**
-- Examples/signal_extraction.ipynb: a jupyter notebook file for signal extraction 
+- Examples/signal_extraction.ipynb: a jupyter notebook file for signal extraction.
+- 3DCT.yml line 18: comment out to create a conda env which can be installed with modified site package (CellTracker).
+---
 
 **3DeeCellTracker** is a deep-learning based pipeline for tracking cells in 3D time lapse images of deforming/moving organs ([eLife, 2021](https://elifesciences.org/articles/59187)).
 
