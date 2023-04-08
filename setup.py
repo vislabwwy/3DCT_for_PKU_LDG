@@ -18,4 +18,5 @@ setuptools.setup(
 	"Environment :: GPU :: NVIDIA CUDA"
     ],
     python_requires='>=3.7',
+    zip_safe=False
 )
