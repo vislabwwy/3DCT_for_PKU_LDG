@@ -749,6 +749,8 @@ class Paths:
         self.track_results = _make_folder(track_results_path)
         self.anim = _make_folder(os.path.join(folder_path, "anim/"))
         self.unet_weights = _make_folder(os.path.join(self.models, "unet_weights/"))
+        self.raw_data = _make_folder(os.path.join(folder_path, "raw_data/")) # vislabwwy: folder for storing raw data
+        self.cell_trace = _make_folder(os.path.join(folder_path, "cell_trace/")) # vislabwwy: folder for storing cell_trace results
 
 
 class History:

@@ -10,6 +10,8 @@
 - CellTracker/unet3d.py line 36: change "inputs = Input((160,160,16,1))" to "inputs = Input((80,80,8,1))". **Luo-lab pic size is 460*157, smaller than 160**
 - CellTracker/tracker.py line 1258: change "self.segresult.r_corrdinates_segment, 20" to "self.segresult.r_corrdinates_segment, 5" **Luo-lab cell number per volume is less than 20. Note that the ffn model should also be updated accordingly**
 - CellTracker/analyses.py line 15-88: define a get_signals function. **Used for singal extraction**
+- CellTracker/tracker.py line 752: add "self.raw_data = _make_folder(os.path.join(folder_path, "raw_data/"))" to create a folder for storing raw data **We didnt pre-align the raw data, so we use raw_data folder to store these images, the reason is to keep the orginal folder structure(using the data folder for aligned data)**
+- CellTracker/tracker.py line 752: add "self.cell_trace = _make_folder(os.path.join(folder_path, "cell_trace/"))" to create a folder for storing final cell traces **The folder is used for storing final results**
 - Examples/signal_extraction.ipynb: a jupyter notebook file for signal extraction.
 - 3DCT.yml line 18: comment out to create a conda env which can be installed with modified site package (CellTracker).
 ---
