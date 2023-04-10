@@ -12,7 +12,7 @@ import matplotlib as mpl
 mpl.rcParams["axes.spines.right"] = False
 mpl.rcParams["axes.spines.top"] = False
 
-def get_signals(path_raw, path_tracked, volume_num, layer_num):
+def get_signals(path_raw, path_tracked, volume_num, layer_num): # vislabwwy: used for pku-ldg-lab
     """
     Get transcription signals of all cells
 

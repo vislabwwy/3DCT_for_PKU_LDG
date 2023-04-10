@@ -23,7 +23,7 @@ warnings.filterwarnings('ignore')
 TITLE_STYLE = {'fontsize': 16, 'verticalalignment': 'bottom'}
 
 
-def unet3_a():
+def unet3_a(): # vislabwwy: modified to fit luo-lab data
     """
     Generate a 3D unet model used in figure 2-S1a (eLife 2021)
 
