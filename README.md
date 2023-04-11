@@ -18,10 +18,9 @@
 
 **Installation**
 ```console
+$ git clone https://github.com/vislabwwy/3DCT_for_PKU_LDG.git
+$ cd 3DCT_for_PKU_LDG
 $ conda env create -f 3DCT.yml -n 3DCT_PKU_LDG
-```
-
-```console
 $ conda activate 3DCT_PKU_LDG
 $ python setup.py install
 ```
