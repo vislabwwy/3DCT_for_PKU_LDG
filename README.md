@@ -15,6 +15,16 @@
 - ~~Examples/signal_extraction.ipynb: a jupyter notebook file for signal extraction.~~
 - Examples/single_mode_worm1-clear.ipynb: integrate the signal extraction operation.
 - 3DCT.yml line 18: comment out to create a conda env which can be installed with modified site package (CellTracker).
+
+**Installation**
+```console
+$ conda env create -f 3DCT.yml -n 3DCT_PKU_LDG
+```
+
+```console
+$ conda activate 3DCT_PKU_LDG
+$ python setup.py install
+```
 ---
 
 **3DeeCellTracker** is a deep-learning based pipeline for tracking cells in 3D time lapse images of deforming/moving organs ([eLife, 2021](https://elifesciences.org/articles/59187)).
