@@ -3,7 +3,7 @@ A module for analyses after tracking
 Author: Chentao Wen
 
 """
-
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
@@ -12,7 +12,7 @@ import matplotlib as mpl
 mpl.rcParams["axes.spines.right"] = False
 mpl.rcParams["axes.spines.top"] = False
 
-def get_signals(path_raw, path_tracked, volume_num, layer_num): # vislabwwy: used for pku-ldg-lab
+def get_signals(path_raw, path_tracked, volume_num, layer_num):
     """
     Get transcription signals of all cells
 
@@ -79,12 +79,12 @@ def get_signals(path_raw, path_tracked, volume_num, layer_num): # vislabwwy: use
             label_i[np.where(label_i==label)]=255
             label_i[:,height,width]=0
             max_projection_i = np.max(label_i,axis = 0)
-            cv2.imwrite("./cell_trace/cell_%i_%i.png" %(label,frame),max_projection_i)
+            cv2.imwrite(os.path.join(os.path.abspath("./worm1"),"cell_trace/cell_%i_%i.png") %(label,frame),max_projection_i)
     # save separate csv file for each cell
-    np.savetxt("./cell_trace/signal.txt",signals,delimiter=',')
+    np.savetxt(os.path.join(os.path.abspath("./worm1"),"cell_trace/signal.txt"),signals,delimiter=',')
     for label in range(1, cell_num + 1):
-        np.savetxt("./cell_trace/cell_%i.txt"%label,signals[:,label-1],delimiter=',')
-        np.savetxt("./cell_trace/max_loc_%i.txt"%label,max_loc[:,label-1],delimiter=',')
+        np.savetxt(os.path.join(os.path.abspath("./worm1"),"cell_trace/cell_%i.txt") %label,signals[:,label-1],delimiter=',')
+        np.savetxt(os.path.join(os.path.abspath("./worm1"),"cell_trace/max_loc_%i.txt") %label,max_loc[:,label-1],delimiter=',')
     return signals
 
 def get_activities(path_raw, path_tracked, volume_num, layer_num):
